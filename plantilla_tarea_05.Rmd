@@ -1,0 +1,202 @@
+---
+title: "Tarea 5"
+author: "[correo alumno]"
+output:
+  html_document
+---
+
+---
+
+# Instrucciones
+
+Esta tarea tiene ejercicios para crear datos de un ensayo clínico (un tipo de experimento) conocido como "Randomized Control Trial". En ete tipo de estudios, los participantes son asignados al azar, a la condición de tratamientom, y a la condición control.
+
+Este estudio es sobre pacientes con anorexia nerviosa que presentan pesos por debajo del límite saludable. El éxito del tratamiento en este caso se midió por el aumento de peso. Tenemos dos variables: `pre_kg`, el peso antes del tratamiento, y `kg`, el peso al final del tratamiento. Los pacientes en tratamiento reciben terapia familiar en 20 sesiones.
+
+Este es el contenido de la base de datos que usaremos:
+
+
+```
+
+variable    tipo_vairable   muestra_de_valores  descripción
+id_i        <int>           26018, 16399, 3303  numero único del caso observado
+therapy     <chr>           "f", "f", "f", "f"  terapia recibida (f = familiar, c = control)
+pre_kg      <dbl>           39.00891, 39.00891  peso corporal previo al tratamiento
+kg          <dbl>           41.50367, 41.59439  peso corporal al finalizar el tratamiento
+
+```
+
+- El archivo que contiene los datos que vamos a emplear ya está cargado en el proyecto en posit y se llama:
+
+```
+
+data_anorexia.csv
+
+```
+
+**Nota**: Usaremos una base de datos "expandida" con muchos casos, creada a partir de datos reales. Así, los datos generados al azar tendrán resultados basados en un ejemplo realista. En el ejercicio 3, crearás una base con 50 casos por grupo (tratado y no tratado). Esto permite trabajar con datos y resultados únicos para cada persona.
+
+---
+
+# Tarea 05
+
+
+## Ejercicio 1. Abrir los datos.
+
+- Abra los datos `data_anorexia.csv` usando la función `read.csv()`. Use un objeto llamado `anorexia` para guardar los datos.
+
+```{r}
+
+# Instrucciones: Pegue o escriba los códigos utilizados en las siguientes 
+#                líneas [no coloque el signo gato antes de su respuesta]
+#                Una vez terminado su código, borre estos comentarios.
+
+
+```
+
+## Ejercicio 2. Vista previa de a los datos.
+
+- **¿Cuántas variables y cuántos casos posee la base de datos original?**
+- Indique su respuesta bajo el código.
+
+```{r}
+
+# Instrucciones: Escriba aqui un comando para obtener la 
+#                cantidad de variables, y de casos observados
+#                de la base de datos empleada. Se sugiere emplear
+#                dplyr::glimpse()
+
+
+```
+
+- Respuesta 
+  + Casos: `[escribir aqui la cantidad de casos, y borrar los corchetes]`
+  + Variables: `[escribir aqui la cantidad de variables, y borrar los corchetes]`
+
+
+## Ejercicio 3. Generar muestra aleatoria
+
+Como en la tarea 1, buscamos resultados únicos para cada estudiante. Para eso te pedimos generar una muestra de datos única usando tu RUT. Solo debes cambiar el valor de `set.seed()` por tu RUT (sin dígito verificador), para obtener una muestra diferente. Recuerda que **todos los ejercicios siguientes** **necesitan** **usar estos datos generados**.
+
+
+```{r}
+
+# Instrucciones: reemplaze el valor 123456789 "set.seed()", e incluya su RUT
+#                como argumento para fijar seed.
+#                Genere la muestra aleatoria solicitada.
+#                Esta muestra contiene el 50% de los datos originales.
+
+set.seed(123456789) # Reemplazar el set.seed, y conservar el resto del código.
+library(dplyr)
+data_anorexia <- dplyr::slice_sample(anorexia, n = 50, by = therapy)
+
+
+```
+
+
+## Ejercicio 4. Crear una variable dummy.
+
+Para medir el efecto del tratamiento, necesitamos una variable *dummy* con dos valores: cero y uno. Debes recodificar la variable **therapy** en una nueva variable numérica con estos valores. Usa cero para pacientes sin tratamiento y uno para quienes tuvieron terapia familiar. Crea una nueva variable llamada `trt` con estos valores nuevos.
+
+```{r}
+
+
+
+```
+
+## Ejercicio 5. Revisión de variable dummy
+
+Después de crear la variable dummy trt, genera una tabla cruzada comparando las frecuencias de casos con valores originales de therapy y los nuevos valores en trt.
+
+```{r}
+
+
+
+```
+
+
+## Ejercicio 6. Evaluación del control y del tratamiento previo al tratamiento.
+
+Uno de los supuestos en estudios experimentales es que los grupos control y experimental sean similares antes del estudio. Usa un modelo de regresión con ‘pre_kg’ como variable de respuesta y ´trt’ como covariable. Indica si trt está asociada a pesos mayores o menores que el grupo control. Reporta el coeficiente de regresión de esta variable.
+
+```{r}
+
+
+
+```
+
+- Resultado
+  + [Indique con sus palabras el resultado encontrado, en esta sección, y en el siguiente paréntesis remplace los XXXX por los estadísticos pertinentes. En la respuesta indica si ‘trt´ está asociada a pesos mayores o menores justificando con los datos del modelo de regresión] `(b = XXXX, SE = XXXX, t = XXXX, p < XXXX)` .
+
+**Nota:** guía para identificar los estimados a reportar en parentesis.
+
+```
+
+b  = XXXX #valor dado por “estimate trt”
+SE = XXXX #valor dado por “Std. error trt”
+t  = XXXX  #valor dado por “t value trt”
+p  < XXXX  #valor dado por “Pr(>|t|) trt
+
+```
+
+## Ejercicio 7. Ajuste el modelo nulo.
+
+De acuerdo a lo revisado en el capítulo 8 de Vik (2014), el modelo nulo en una regresión es importante para comparar medias entre grupos. Este modelo sin predictores muestra la variabilidad total de la variable de respuesta. Usa el modelo nulo con kg y obtén la salida con summary(). Con la salida del modelo ajustado, responde:
+
+a) ¿Cuál es el promedio de peso en los pacientes evaluados? Indica la cifra y en qué parte de la salida de la regresión la encontraste, copiando la línea del output con este resultado.
+
+b) ¿Cuál es la desviación estándar de la variable de respuesta? Indica la cifra y en qué parte de la salida de la regresión la encontraste, copiando la línea del output con este resultado.
+
+```{r}
+
+
+```
+
+- Resultados
+
+  a.1) Promedio observado: `______`
+
+  a.2) Copia de la línea donde se encuentra el promedio:
+
+`copiar linea aqui`
+
+  b.1) Desviación estándar: `______`
+
+  a.2) Copia de la línea donde se encuentra la desviación estandar:
+
+`copiar linea aqui`
+
+
+## Ejercicio 7. Ajuste el modelo aumentado.
+
+Vik (2014) llama modelo aumentado al que incluye covariables de interés. Ajusta el modelo aumentado comparando el peso final del grupo control con el de los pacientes tratados. Elige la variable de respuesta y la covariable adecuada. Luego, muestra el output de la regresión usando `summary()`.
+
+
+```{r}
+
+
+```
+
+## Ejercicio 8. Efecto esperado.
+
+¿Cual es el peso promedio esperado de los pacientes tratados?
+
+- Resultado
+  + `[indique cifra aqui]`
+
+
+## Ejercicio 9. Tamaño de efecto
+
+¿Cuál es el tamaño de efecto observado, en términos de la métrica de la variable de respuesta?
+
+- Resultado
+  + `[indique cifra aqui]`
+
+
+## Ejercicio 10. Interpretación y descripción de resultados.
+
+Considerando los resultados anteriores, describa los resultados encontrados respecto a la efectividad del tratamiento. Guiese por medio del capítulo de Huck (2012, capitulo 16, p367).
+
+- Resultado
+  + [Indique con sus palabras el resultado encontrado en esta sección. Es decir, describa la interpretación de la pendiente del modelo ajustado. Además, en el siguiente paréntesis, reemplace los XXXX por los estadísticos pertinentes, para completar la descripción de resultados] `(b = XXXX, SE = XXXX, t = XXXX, p < XXXX)`.
+
