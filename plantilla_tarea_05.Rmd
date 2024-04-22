@@ -84,7 +84,8 @@ Como en la tarea 1, buscamos resultados únicos para cada estudiante. Para eso t
 # Instrucciones: reemplaze el valor 123456789 "set.seed()", e incluya su RUT
 #                como argumento para fijar seed.
 #                Genere la muestra aleatoria solicitada.
-#                Esta muestra contiene el 50% de los datos originales.
+#                Esta muestra contiene el 50 observaciones de cada condición
+#                de los datos originales.
 
 set.seed(123456789) # Reemplazar el set.seed, y conservar el resto del código.
 library(dplyr)
